@@ -41,6 +41,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from './feature/userSlice.jsx';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { RegisterPage } from './components/RegisterPage.jsx';
 
 import { login } from './feature/userSlice.jsx'; // Adjust the import path as necessary
 function App() {
@@ -74,6 +75,7 @@ function App() {
       <Routes>
         <Route path="/" element={user ? <Navigate to="/home" /> : <LoginPage />} />
         <Route path="/home" element={user ? <HomePage /> : <Navigate to="/" />} />
+         <Route path="/register" element={<RegisterPage/>}/>
       </Routes>
     </Router>
   )
