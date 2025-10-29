@@ -61,7 +61,7 @@ const demoTheme = createTheme({
   },
 });
 
-function DemoPageContent({ pathname ,handleProjectClick}) {
+function DemoPageContent({ pathname}) {
  
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -91,7 +91,7 @@ function DemoPageContent({ pathname ,handleProjectClick}) {
   };
 
   useEffect(() => {
-    if (pathname) {
+    if (pathname && pathname !== "/dashboard") {
       fetchProjectDetails(pathname);
     }
   }, [pathname]);
@@ -378,8 +378,10 @@ function DashboardLayoutAccountSidebar(props) {
   const [projectID, setProjectID] = useState(null);
 const [projectDetails, setProjectDetails] = useState(null);
 const navigate = useNavigate();
-
+// const didFetchProjects = useRef(false);
   useEffect(() => {
+    // if (didFetchProjects.current) return;  // 👈 Prevent multiple calls
+  // didFetchProjects.current = true;
     const fetchProjects = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/ai/get/projects", {
@@ -405,6 +407,13 @@ const navigate = useNavigate();
 
         // setNavigation([...DEFAULT_NAVIGATION, ...projectItems]);
         setNavigation([ ...projectItems]);
+
+        // Set default selected project to the first item, if none selected yet
+        if (response.data && response.data.length > 0 && (pathname === "/dashboard" || !pathname)) {
+          const firstProjectId = response.data[0].projectId;
+          // Ensure leading slash so DemoPageContent builds correct URL: /get/ID
+          setPathname(`/${firstProjectId}`);
+        }
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
