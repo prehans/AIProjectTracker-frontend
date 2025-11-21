@@ -195,7 +195,7 @@ const handlesubmit = async (e) =>{
         <div style={{ flex: 1, height: '1px', backgroundColor: '#ccc' }}></div>
       </div>
       
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center',border: '2px solid rgb(0, 0, 0)' }}>
         <GoogleLogin
           onSuccess={handleGoogleSignUpSuccess}
           onError={handleGoogleSignUpError}
@@ -204,6 +204,7 @@ const handlesubmit = async (e) =>{
           size="large"
           text="signup_with"
           shape="rectangular"
+          width="397"
         />
       </div>
     </div>

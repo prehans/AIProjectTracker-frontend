@@ -76,15 +76,16 @@ const Login = () => {
       });
 
       // Store token and user info
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token.body || response.data.token);
+      if (response.data.jwt) {
+        console.log("Response data:", response.data);
+        localStorage.setItem("token", response.data.jwt);
         localStorage.setItem("username", googleUser.name || googleUser.email);
         localStorage.setItem("avatar", googleUser.picture || avatar);
         
         dispatch(
           login({
             username: googleUser.name || googleUser.email,
-            token: response.data.token.body || response.data.token,
+            token: response.data.jwt,
             loggedIn: true,
             avatar: googleUser.picture || avatar,
             email: googleUser.email,
@@ -190,7 +191,7 @@ const Login = () => {
           </Divider>
         </Box>
         
-        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center',border: '2px solid rgb(0, 0, 0)' }}>
           <GoogleLogin
             onSuccess={handleGoogleLoginSuccess}
             onError={handleGoogleLoginError}
@@ -199,6 +200,8 @@ const Login = () => {
             size="large"
             text="signin_with"
             shape="rectangular"
+            width="397"
+            
           />
         </Box>
         
